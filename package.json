@@ -1,0 +1,60 @@
+{
+  "name": "rtn-i18n",
+  "version": "0.0.1",
+  "description": "react native i18n",
+  "react-native": "src/index",
+  "source": "src/index",
+  "main": "dist/index",
+  "type": "module",
+  "files": [
+    "dist",
+    "android",
+    "ios",
+    "src",
+    "rtn-i18n.podspec",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "i18n",
+    "typescript"
+  ],
+  "repository": "https://github.com/eliot-ye/rtn-i18n",
+  "author": "eliot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eliot-ye/rtn-i18n/issues"
+  },
+  "homepage": "https://github.com/eliot-ye/rtn-i18n#readme",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.47",
+    "react": "^18.2.0",
+    "react-native": "^0.73.2",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8",
+    "vite-plugin-dts": "^3.7.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "codegenConfig": {
+    "name": "RTNI18nSpec",
+    "type": "modules",
+    "jsSrcsDir": "src/spec",
+    "android": {
+      "javaPackageName": "com.rtni18n"
+    }
+  }
+}
