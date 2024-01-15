@@ -12,7 +12,6 @@ const LangCodeModule: typeof NativeLangCode = isTurboModuleEnabled
 const LangCodeConstants = LangCodeModule?.getConstants();
 
 interface I18nOption<C extends string> {
-  defaultLang?: C;
   langScope: {
     [key in C]: string[];
   };
@@ -127,9 +126,7 @@ export function createReactI18n<C extends string, T extends JSONConstraint>(
   const codes = Object.keys(langStrings) as string[];
 
   let defaultLang = RCI.$getCode();
-  if (option?.defaultLang && codes.includes(option.defaultLang)) {
-    defaultLang = option.defaultLang;
-  } else if (LangCodeModule && LangCodeConstants) {
+  if (LangCodeModule && LangCodeConstants) {
     const nativeLangCode = LangCodeConstants.langCode;
     if (nativeLangCode) {
       if (codes.includes(nativeLangCode)) {
