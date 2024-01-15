@@ -180,9 +180,7 @@ export function createReactI18n<C extends string, T extends JSONConstraint>(
         return RCI.$addListener("changeCode", (_lang) => langCodeSet(_lang));
       }, []);
 
-      return {
-        langCode,
-      };
+      return langCode;
     },
   };
 }
