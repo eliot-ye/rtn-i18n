@@ -106,18 +106,18 @@ export function createReactI18n<C extends string, T extends JSONConstraint>(
   function setLangCode(code: C) {
     RCI.$setCode(code);
     if (LangCodeModule) {
+      let _code: string = code;
       if (option?.langMap) {
         const codeMap = option.langMap[code];
         if (codeMap) {
           const codeKey = codeMap[Platform.OS];
           if (codeKey) {
-            LangCodeModule.setLangCode(codeKey);
-            return;
+            _code = codeKey;
           }
         }
       }
       try {
-        LangCodeModule.setLangCode(code);
+        LangCodeModule.setLangCode(_code);
       } catch (error) {
         console.error(`setLangCode(${code}) error:`, error);
       }
