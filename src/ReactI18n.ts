@@ -12,8 +12,8 @@ const LangCodeModule: typeof NativeLangCode = isTurboModuleEnabled
 const LangCodeConstants = LangCodeModule?.getConstants();
 
 interface I18nOption<C extends string> {
-  langScope: {
-    [key in C]: string[];
+  langScope?: {
+    [key in C]?: string[];
   };
   langMap?: {
     [key in C]?: {
@@ -129,7 +129,7 @@ export function createReactI18n<C extends string, T extends JSONConstraint>(
   if (LangCodeModule && LangCodeConstants) {
     const nativeLangCode = LangCodeConstants.langCode;
     if (nativeLangCode) {
-      if (codes.includes(nativeLangCode)) {
+      if (codes.some((code) => nativeLangCode.includes(code))) {
         defaultLang = nativeLangCode as C;
       } else if (option?.langScope) {
         const supportedLangCodes = Object.keys(option.langScope) as C[];
@@ -146,7 +146,7 @@ export function createReactI18n<C extends string, T extends JSONConstraint>(
   }
   RCI.$setCode(defaultLang);
 
-  /** 注意：只有搭配`useLocal`并在组件内使用才能获得反应性 */
+  /** 注意：只有搭配`useLangCode`并在组件内使用才能获得反应性 */
   function translate<K extends keyof T>(key: K): T[K];
   function translate<K extends keyof T, L extends T[K], V extends Formatted>(
     key: K,
