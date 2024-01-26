@@ -10,7 +10,7 @@ npm i rtn-i18n
 
 **_注意：如果更换语言但页面没有重新加载，那么需要在该组件中使用 `useLangCode` 钩子函数_**
 
-```js
+```ts
 import {createReactI18n, formatReactNode} from 'rtn-i18n';
 
 export enum LangCode {
