@@ -21,6 +21,8 @@ if (isNewArchitectureEnabled()) {
 }
 
 android {
+  namespace 'com.rtni18n'
+
   compileSdkVersion safeExtGet('compileSdkVersion', 31)
 
   defaultConfig {
