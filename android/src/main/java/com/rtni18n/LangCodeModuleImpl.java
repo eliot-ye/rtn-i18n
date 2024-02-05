@@ -19,11 +19,11 @@ public class LangCodeModuleImpl {
 
     ReactApplicationContext ctx;
 
-    LangCodeModuleImpl(ReactApplicationContext reactContext){
+    LangCodeModuleImpl(ReactApplicationContext reactContext) {
         ctx = reactContext;
 
         String langCodeOverride = getPreferences().getString(LANG_CODE_KEY, null);
-        if(langCodeOverride != null){
+        if (langCodeOverride != null) {
             setLang(langCodeOverride);
         }
     }
@@ -34,33 +34,34 @@ public class LangCodeModuleImpl {
         return constants;
     }
 
-    private void setLang(String langCode){
+    private void setLang(String langCode) {
         Resources resources = ctx.getResources();
         Configuration config = resources.getConfiguration();
         String[] langCodeList = langCode.split("-");
-        if(langCodeList.length == 1){
+        if (langCodeList.length == 1) {
             config.locale = new Locale(langCode);
-        }else{
+        } else {
             config.locale = new Locale(langCodeList[0], langCodeList[1]);
         }
         resources.updateConfiguration(config, null);
     }
-    public void setLangCode(String langCode){
+
+    public void setLangCode(String langCode) {
         setLang(langCode);
         SharedPreferences.Editor editor = getPreferences().edit();
         editor.putString(LANG_CODE_KEY, langCode);
         editor.apply();
     }
 
-    public String getCurrentLanguage(){
+    public String getCurrentLanguage() {
         Locale locale = ctx.getResources().getConfiguration().locale;
         String langCode = locale.getLanguage();
         String countryCode = locale.getCountry();
 
-        return langCode+"-"+countryCode;
+        return langCode + "-" + countryCode;
     }
 
-    public SharedPreferences getPreferences(){
+    public SharedPreferences getPreferences() {
         return ctx.getSharedPreferences("RNLocaleCode", Context.MODE_PRIVATE);
     }
 

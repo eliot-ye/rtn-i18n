@@ -28,7 +28,7 @@ public class LangCodeModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setLangCode(String langCode){
+    public void setLangCode(String langCode) {
         implementation.setLangCode(langCode);
     }
 }

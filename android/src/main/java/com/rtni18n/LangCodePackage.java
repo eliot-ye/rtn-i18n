@@ -28,15 +28,15 @@ public class LangCodePackage extends TurboReactPackage {
             final Map<String, ReactModuleInfo> moduleInfos = new HashMap<>();
             boolean isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
             moduleInfos.put(
-                LangCodeModuleImpl.NAME,
-                new ReactModuleInfo(
-                        LangCodeModuleImpl.NAME,
-                        LangCodeModuleImpl.NAME,
-                        false, // canOverrideExistingModule
-                        false, // needsEagerInit
-                        true, // hasConstants
-                        false, // isCxxModule
-                        isTurboModule // isTurboModule
+                    LangCodeModuleImpl.NAME,
+                    new ReactModuleInfo(
+                            LangCodeModuleImpl.NAME,
+                            LangCodeModuleImpl.NAME,
+                            false, // canOverrideExistingModule
+                            false, // needsEagerInit
+                            true, // hasConstants
+                            false, // isCxxModule
+                            isTurboModule // isTurboModule
             ));
             return moduleInfos;
         };

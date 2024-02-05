@@ -27,7 +27,7 @@ public class LangCodeModule extends NativeLangCodeSpec {
     }
 
     @Override
-    public void setLangCode(String langCode){
+    public void setLangCode(String langCode) {
         implementation.setLangCode(langCode);
     }
 }
