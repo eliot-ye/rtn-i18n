@@ -129,8 +129,9 @@ export function createReactI18n<C extends string, T extends JSONConstraint>(
   if (LangCodeModule && LangCodeConstants) {
     const nativeLangCode = LangCodeConstants.langCode;
     if (nativeLangCode) {
-      if (codes.some((code) => nativeLangCode.includes(code))) {
-        defaultLang = nativeLangCode as C;
+      const _code = codes.find((code) => nativeLangCode.includes(code));
+      if (_code) {
+        defaultLang = _code as C;
       } else if (option?.langScope) {
         const supportedLangCodes = Object.keys(option.langScope) as C[];
         for (let i = 0; i < supportedLangCodes.length; i++) {
