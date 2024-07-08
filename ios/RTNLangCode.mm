@@ -41,7 +41,7 @@ RCT_REMAP_METHOD(setLangCode, langCode:(NSString *)langCode)
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params
 {
-    return std::make_shared<facebook::react::NativeI18nSpecJSI>(params);
+    return std::make_shared<facebook::react::NativeLangCodeSpecJSI>(params);
 }
 #endif
 
