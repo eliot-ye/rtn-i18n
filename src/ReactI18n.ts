@@ -1,4 +1,4 @@
-import type NativeLangCode from "./spec/NativeLangCode";
+import type { Spec } from "./spec/NativeLangCode";
 import React, { useEffect, useState } from "react";
 import { NativeModules, Platform } from "react-native";
 import { Option, createReactiveConstant } from "./ReactiveConstant";
@@ -6,7 +6,7 @@ import { Option, createReactiveConstant } from "./ReactiveConstant";
 // @ts-ignore
 const isTurboModuleEnabled = global.__turboModuleProxy != undefined;
 
-const LangCodeModule: typeof NativeLangCode = isTurboModuleEnabled
+const LangCodeModule: Spec = isTurboModuleEnabled
   ? require("./spec/NativeLangCode").default
   : NativeModules.LangCode;
 const LangCodeConstants = LangCodeModule?.getConstants();
