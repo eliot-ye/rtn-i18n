@@ -69,7 +69,7 @@ export function formatReactNode<L extends string, V extends Formatted>(
         // If no value found, check if working with an object instead
         if (valueForPlaceholder === undefined) {
           const valueFromObjectPlaceholder =
-            valuesForPlaceholders[0]?.[matchedKey];
+            valuesForPlaceholders?.[0]?.[matchedKey];
           if (valueFromObjectPlaceholder !== undefined) {
             valueForPlaceholder = valueFromObjectPlaceholder;
           } else {
