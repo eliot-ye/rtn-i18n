@@ -188,7 +188,7 @@ export function createReactI18n<C extends string, T extends JSONConstraint>(
     L extends T[K],
     V extends Formatted
   >(code: C, key: K, ...values: V[]): FormatReturn<V, L> {
-    const value = RCI.$getValue(key, code);
+    const value = RCI.$getValue(key, code) ?? (key as T[K]);
     if (values.length) {
       return formatReactNode(value, ...values);
     }
