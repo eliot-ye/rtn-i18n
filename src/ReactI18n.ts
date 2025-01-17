@@ -202,7 +202,8 @@ export function createReactI18n<C extends string, T extends JSONConstraint>(
     useTranslateWithCode: (code: C) =>
       useMemo(
         () => ({
-          t: (key: keyof T) => translateWithCode(code, key),
+          t: ((key: keyof T) =>
+            translateWithCode(code, key)) as typeof translate,
           f: formatReactNode,
         }),
         [code]
