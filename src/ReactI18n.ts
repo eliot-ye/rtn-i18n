@@ -167,8 +167,34 @@ export function createReactI18n<C extends string, T extends JSONConstraint>(
     return RCI[key] ?? (key as T[K]);
   }
 
+  /**
+   * 使用指定的语言代码翻译
+   */
+  function translateWithCode<K extends keyof T>(code: C, key: K): T[K];
+  function translateWithCode<
+    K extends keyof T,
+    L extends T[K],
+    V extends Formatted
+  >(code: C, key: K, value: KeyConstraint<InferKey<L>, V>): FormatReturn<V, L>;
+  function translateWithCode<
+    K extends keyof T,
+    L extends T[K],
+    V extends Formatted
+  >(code: C, key: K, ...values: V[]): FormatReturn<V, L>;
+  function translateWithCode<
+    K extends keyof T,
+    L extends T[K],
+    V extends Formatted
+  >(code: C, key: K, ...values: V[]): FormatReturn<V, L> {
+    if (values.length) {
+      return formatReactNode(RCI.$getValue(key, code), ...values);
+    }
+    return RCI.$getValue(key, code);
+  }
+
   return {
     t: translate,
+    twc: translateWithCode,
     f: formatReactNode,
 
     setLangCode,

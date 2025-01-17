@@ -1,4 +1,4 @@
-import {debounce, getOnlyStr} from './utils/tools';
+import { debounce, getOnlyStr } from "./utils/tools";
 
 export type Option<C extends string, T extends JSONConstraint> = {
   [code in C]: T;
@@ -16,7 +16,7 @@ let serialNumber = 0;
 
 export function createReactiveConstant<
   C extends string,
-  T extends JSONConstraint,
+  T extends JSONConstraint
 >(opt: Option<C, T>, mark?: string) {
   serialNumber++;
   const _mark = mark || `SerialNumber-${serialNumber}`;
@@ -28,7 +28,8 @@ export function createReactiveConstant<
   type Key = keyof T;
 
   type ListenerId = string;
-  const listenerCodeMap: {[id: ListenerId]: ListenerCodeFn<C> | undefined} = {};
+  const listenerCodeMap: { [id: ListenerId]: ListenerCodeFn<C> | undefined } =
+    {};
   const listenerCodeIds: ListenerId[] = [];
 
   /**
@@ -38,11 +39,11 @@ export function createReactiveConstant<
    * @returns function removeListener
    */
   function addListener(
-    eventName: 'changeCode',
-    fn: ListenerCodeFn<C>,
+    eventName: "changeCode",
+    fn: ListenerCodeFn<C>
   ): () => void;
   function addListener(eventName: string, fn: ListenerCodeFn<C>) {
-    if (eventName === 'changeCode') {
+    if (eventName === "changeCode") {
       try {
         fn(activeCode);
       } catch (error) {
@@ -66,7 +67,7 @@ export function createReactiveConstant<
       } catch (error) {
         console.error(
           `${_mark} listener (id: ${listenerCodeIds[i]}) error:`,
-          error,
+          error
         );
       }
     }
@@ -74,13 +75,13 @@ export function createReactiveConstant<
 
   type SubscribeId = string;
   const subscribeMap: {
-    [id: SubscribeId]: {fn: SubscribeFn<T>; keys?: Key[]} | undefined;
+    [id: SubscribeId]: { fn: SubscribeFn<T>; keys?: Key[] } | undefined;
   } = {};
   const subscribeIds: SubscribeId[] = [];
   let effectKeys: Key[] = [];
   const effectHandler = debounce(
     (_value: T) => {
-      subscribeIds.forEach(_id => {
+      subscribeIds.forEach((_id) => {
         const subscribe = subscribeMap[_id];
         if (subscribe?.keys) {
           let hasSubscribe = false;
@@ -106,15 +107,18 @@ export function createReactiveConstant<
       });
       effectKeys = [];
     },
-    {wait: 0},
+    { wait: 0 }
   );
 
   const returnValue = {
     ...defaultValue,
 
-    _interfaceType: 'ReactiveConstant',
+    _interfaceType: "ReactiveConstant",
     _mark,
 
+    $getValue<K extends Key>(key: K, code?: C) {
+      return code ? opt[code][key] : returnValue[key];
+    },
     /**
      * - setValue 内部会进行数据的浅层对比。对比相同的属性，不会更新和触发订阅函数。
      * @param value - 不能是`undefined`和是函数
@@ -122,24 +126,22 @@ export function createReactiveConstant<
     $setValue<K extends Key>(key: K, value: T[K]) {
       if (value === undefined) {
         console.error(
-          `${_mark} $setValue error: "${String(
-            key,
-          )}" value cannot be undefined`,
+          `${_mark} $setValue error: "${String(key)}" value cannot be undefined`
         );
         return;
       }
-      if (typeof value === 'function') {
+      if (typeof value === "function") {
         console.error(
           `${_mark} $setValue error: "${String(
-            key,
-          )}" value cannot be a function`,
+            key
+          )}" value cannot be a function`
         );
         return;
       }
       const oldValue = returnValue[key];
-      if (typeof oldValue === 'function') {
+      if (typeof oldValue === "function") {
         console.error(
-          `${_mark} $setValue error: "${String(key)}" is a read-only function`,
+          `${_mark} $setValue error: "${String(key)}" is a read-only function`
         );
         return;
       }
@@ -161,7 +163,7 @@ export function createReactiveConstant<
           return;
         }
 
-        Object.keys(valueMap).forEach(_key => {
+        Object.keys(valueMap).forEach((_key) => {
           returnValue.$setValue(_key, valueMap[_key]);
         });
         listenerCodeHandle(activeCode);
