@@ -117,7 +117,7 @@ export function createReactiveConstant<
     _mark,
 
     $getValue<K extends Key>(key: K, code?: C) {
-      return code ? opt[code][key] : returnValue[key];
+      return code ? opt[code][key] : opt[activeCode][key];
     },
     /**
      * - setValue 内部会进行数据的浅层对比。对比相同的属性，不会更新和触发订阅函数。
@@ -149,6 +149,7 @@ export function createReactiveConstant<
         return;
       }
 
+      opt[activeCode][key] = value;
       returnValue[key] = value;
       effectKeys.push(key);
       effectHandler(returnValue);

@@ -4,7 +4,7 @@ import { NativeModules, Platform } from "react-native";
 import { Option, createReactiveConstant } from "./ReactiveConstant";
 
 // @ts-ignore
-const isTurboModuleEnabled = global.__turboModuleProxy != undefined;
+const isTurboModuleEnabled = global?.__turboModuleProxy != undefined;
 
 const LangCodeModule: Spec = isTurboModuleEnabled
   ? require("./spec/NativeLangCode").default
@@ -169,6 +169,8 @@ export function createReactI18n<C extends string, T extends JSONConstraint>(
 
   /**
    * 使用指定的语言代码翻译
+   *
+   * 注意：只有搭配`useLangCode`并在组件内使用才能获得反应性
    */
   function translateWithCode<K extends keyof T>(code: C, key: K): T[K];
   function translateWithCode<
@@ -186,10 +188,11 @@ export function createReactI18n<C extends string, T extends JSONConstraint>(
     L extends T[K],
     V extends Formatted
   >(code: C, key: K, ...values: V[]): FormatReturn<V, L> {
+    const value = RCI.$getValue(key, code);
     if (values.length) {
-      return formatReactNode(RCI.$getValue(key, code), ...values);
+      return formatReactNode(value, ...values);
     }
-    return RCI.$getValue(key, code);
+    return value;
   }
 
   return {
