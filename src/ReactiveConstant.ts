@@ -179,7 +179,7 @@ export function createReactiveConstant<
      * - 短时间内多次使用 $setValue 时，会触发防抖处理，订阅函数只执行一次。
      * @param keys - 订阅属性
      * - 只有订阅的属性发生了更改才触发执行订阅函数。如果不传入该参数，则所有属性更改都会执行。
-     * - 如果传入空数组，则订阅函数只执行一次，并且不会返回 SubscribeId
+     * - 如果传入空数组，则订阅函数只执行一次，并且不会返回 unsubscribe
      * @returns function unsubscribe
      */
     $subscribe<K extends Key>(fn: SubscribeFn<T>, keys?: K[]) {

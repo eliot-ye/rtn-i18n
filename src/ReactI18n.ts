@@ -1,5 +1,5 @@
 import type { Spec } from "./spec/NativeLangCode";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { NativeModules, Platform } from "react-native";
 import { Option, createReactiveConstant } from "./ReactiveConstant";
 
@@ -198,6 +198,16 @@ export function createReactI18n<C extends string, T extends JSONConstraint>(
   return {
     t: translate,
     twc: translateWithCode,
+
+    useTranslateWithCode: (code: C) =>
+      useMemo(
+        () => ({
+          t: (key: keyof T) => translateWithCode(code, key),
+          f: formatReactNode,
+        }),
+        [code]
+      ),
+
     f: formatReactNode,
 
     setLangCode,
