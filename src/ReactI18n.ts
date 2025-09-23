@@ -2,6 +2,7 @@ import type { Spec } from "./spec/NativeLangCode";
 import React, { useEffect, useMemo, useState } from "react";
 import { NativeModules, Platform } from "react-native";
 import { Option, createReactiveConstant } from "./ReactiveConstant";
+import type { JSONConstraint } from "../types/global";
 
 // @ts-ignore
 const isTurboModuleEnabled = global?.__turboModuleProxy != undefined;
@@ -36,7 +37,7 @@ type InferKey<T> = InferKeyArray<T> extends Array<infer K extends string>
   : T;
 type Formatted = string | number | JSX.Element;
 type KeyConstraint<K extends string, V> = Record<K, V>;
-type FormatReturn<V, L> = V extends JSX.Element ? V : L;
+type FormatReturn<V, L> = V extends JSX.Element ? JSX.Element : L;
 export function formatReactNode<L extends string, V extends Formatted>(
   langString: L,
   value: KeyConstraint<InferKey<L>, V>

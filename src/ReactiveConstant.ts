@@ -1,3 +1,4 @@
+import type { JSONConstraint } from "../types/global";
 import { debounce, getOnlyStr } from "./utils/tools";
 
 export type Option<C extends string, T extends JSONConstraint> = {
