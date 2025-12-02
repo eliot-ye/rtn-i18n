@@ -224,6 +224,8 @@ export function createReactI18n<C extends string, T extends JSONConstraint>(
 
       return langCode;
     },
-    addListener: RCI.$addListener,
+    subscribeCode(listener: (langCode: C) => void) {
+      return RCI.$addListener("changeCode", listener);
+    },
   };
 }
